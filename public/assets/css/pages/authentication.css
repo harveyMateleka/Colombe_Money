@@ -14,15 +14,37 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+          margin-top: 10px !important;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+          margin-top: 10px !important;
+
 }
+
+.page-loader{
+  margin-top: -70px !important;
+}
+
 .authentication-wrapper.authentication-1 .authentication-inner {
-  max-width: 300px;
+  
+  border: 1px solid silver !important;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 3px;
+  box-shadow: 0px 0px 10px silver !important;
+  margin-top: 0px !important;
 }
 .authentication-wrapper.authentication-2 .authentication-inner {
   max-width: 380px;
+}
+input{
+  border: 1px solid silver !important;
+  padding: 5px !important;
+}
+.form-control{
+  border-radius: 4px !important;
+  padding: 20px !important
 }
 .authentication-wrapper.authentication-3 {
   -webkit-box-align: stretch;

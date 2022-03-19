@@ -11,17 +11,6 @@ use App\Http\Controllers\ctradmin;
 use App\Http\Controllers\CtrTransfert;
 use Illuminate\Support\Facades\Auth;
 
-//use Session;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -98,6 +87,8 @@ Route::post('admin/update_users', [Ctrpersonnel::class, 'update_users'])->name('
 Route::post('admin/destroy_users', [Ctrpersonnel::class, 'destroy_users'])->name('destroy_users');
 Route::post('admin/destroy_affecter', [Ctrpersonnel::class, 'destroy_affecter'])->name('destroy_affecter');
 Route::post('admin/get_affecter', [Ctrpersonnel::class, 'get_affecter'])->name('get_affecter');
+Route::get('admin/users_list', [Ctrpersonnel::class, 'getUsers'])->name('getUsers');
+Route::post('/admin/user_store', [Ctrpersonnel::class, 'storeUser'])->name('user_store');
 //_____________________________________fin____________________________________________________________________
 //________________________________debut_affectation___________________________________________________________
 Route::get('admin/affectation', [Ctrpersonnel::class, 'index_affectation'])->name('index_affectation');
