@@ -1232,7 +1232,7 @@
         }
 
         function affiche_users() {
-           /* var otableau = $('#tab_users').DataTable({
+            /* var otableau = $('#tab_users').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
                     'print', 'copy', 'excel', 'pdf'
