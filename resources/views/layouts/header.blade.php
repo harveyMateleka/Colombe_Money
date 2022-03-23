@@ -709,7 +709,7 @@
                         "data": 'id',
                         "autoWidth": true,
                         "render": function(data) {
-                            return '<button data-id=' + data + ' class="btn btn-info btn-circle modifier_desa" ><i class="fa fa-check"></i></button>';
+                            return '<button data-id=' + data + ' class="btn btn-info btn-circle modifier_desa" ><i class="fa fa-edit"></i></button>';
                         }
                     }
                 ],
@@ -1263,8 +1263,9 @@
                         "data": 'id',
                         "autoWidth": true,
                         "render": function(data) {
-                            return '<button data-id=' + data + ' class="btn btn-warning btn-circle supprimer_users" ><i class="fa fa-times"></i></button>'
-                            
+                            return `<button data-id=' + data + ' class="btn btn-warning btn-circle supprimer_users" ><i class="fa fa-times"></i></button> 
+                            <button data-id=' + data + ' class="btn btn-success btn-circle edit_user" ><i class="fa fa-edit"></i></button>
+                            `
                         }
                     }
                 ],

@@ -148,21 +148,21 @@
             else{
 
               swal({
-        title: 'La Colombe Money',
-        text: "Voulez vous modifier?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Oui,modifier!',
-        cancelButtonText: 'No, ANNULE!',
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger',
-        buttonsStyling: false,
-        allowOutsideClick: false,
-        showLoaderOnConfirm: true,
-        preConfirm: function () {
-            return new Promise(function (resolve, reject) {
+                    title: 'La Colombe Money',
+                    text: "Voulez vous modifier?",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Oui,modifier!',
+                    cancelButtonText: 'No, ANNULE!',
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false,
+                    allowOutsideClick: false,
+                    showLoaderOnConfirm: true,
+                    preConfirm: function () {
+                 return new Promise(function (resolve, reject) {
 
                 $.ajax({
                     
