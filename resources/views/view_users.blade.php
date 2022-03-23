@@ -47,7 +47,7 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="form-row">
-                                    <input type="text" class="form-control" disabled name="name_matr" placeholder="Afficher le matricule" id="name_matr">
+                                    <input type="text" class="form-control" name="name_matr" disabled placeholder="Afficher le matricule" id="name_matr">
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
@@ -104,7 +104,6 @@
 </div>
 @endsection
 @section('script')
-
 $('body').delegate('.afficher_matr','click',function(){
 var ids=$(this).data('id');
 $("#name_matr").val(ids);
@@ -156,26 +155,36 @@ window.location.href=("{{route('index_users')}}");
 
 $('body').delegate('.supprimer_users','click',function(){
 var ids=$(this).data('id');
-let confirmMessage = confirm('Etes-vous sûr de vouloir supprimer cet utilisateur ?');
 
-$.ajax({
-url : "{{route('destroy_users')}}",
-type : 'POST',
-async : false,
-data : {code:ids
-},
-success:function(data)
-{
-if(data.success=='1'){
-affiche_users();
-}
-else{
-    
-}
-},
-error:function(err){
-    console.log(err)
-}
+Swal.fire({
+
+title: 'Etes-vous sûr ?',
+text: 'Cette opération est irréversible.',
+icon: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Oui, je supprime',
+
+}).then((result)=>{
+    if(result.isConfirmed){
+        $.ajax({
+            url   : "{{route('destroy_users')}}",
+            type  : 'POST',
+            async : false,
+            data  : {code:ids},
+            success:function(data){
+                if(data.success=='1'){
+                    affiche_users();
+                }
+                else{
+                }
+            },
+            error:function(error){
+                console('Erreur :::: ', error);                              
+            }
+        }); 
+    }
 });
 
 });
