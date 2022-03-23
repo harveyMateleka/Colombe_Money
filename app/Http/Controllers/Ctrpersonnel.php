@@ -26,12 +26,16 @@ class Ctrpersonnel extends Controller
         if (Auth::check()) {
             $this->entete();
             $result_users = $this->generateRandom();
+
             return view('view_users', compact('result_users'));
         } else {
             return redirect()->route('index_login');
         }
     }
 
+<<<<<<< HEAD
+    // CREATION NOUVEL UTILISATEUR 
+=======
     public function getUsers()
     {
         if (Auth::check()) {
@@ -51,6 +55,7 @@ class Ctrpersonnel extends Controller
     }
 
     // CREATION NOUVEL UTILISATEUR
+>>>>>>> f3304c65f2d935344c2db94e21f96c20bfd2cc01
 
     public function storeUser(Request $request)
     {
@@ -177,15 +182,7 @@ class Ctrpersonnel extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    
     public function historisation($matr, $operation)
     {
         if ($matr != '' && $operation != '') {
@@ -255,16 +252,7 @@ class Ctrpersonnel extends Controller
             return response()->json(['success' => '1']);
         }
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+  
     public function get_afectation()
     {
         $resultat = DB::table('tbl_affectations')->join('tbl_personnels', 'tbl_affectations.matricule', '=', 'tbl_personnels.matricule')
@@ -322,7 +310,51 @@ class Ctrpersonnel extends Controller
         $resultat = DB::table('users')->join('tbl_personnels', 'users.matricule', '=', 'tbl_personnels.matricule')
             ->orderBy('id', 'DESC')
             ->get(array('id', 'email', 'etatcon', 'tbl_personnels.nom'));
-        return response()->json(['data' => $resultat]);
+
+            $output = '';
+
+            if($resultat->count() > 0) {
+                $output .= '<table class="table table-striped table-sm text-center align-middle">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Noms</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Photo</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+                    foreach ($resultat as $user){
+                        $output .='<tr>
+                            <td>'.$user->id.'</td>
+                            <td>'.$user->name.'</td>
+                            <td>'.$user->email.'</td>
+                            <td>'.$user->etatcon.'</td>
+                            <td>
+                                <img src="storage/img/'.$user->image.'" width="50" 
+                                class="img img-thumbnail rounded-circle" />
+                            </td>
+                            <td>
+                                <a href="#" id=" '.$user->id.' " class="text-success mx-1 editIcon"
+                                    data-bs-toggle="modal" data-bs-target="#editUser">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+
+                                <a href="#" id=" '.$user->id.' " class="text-danger mx-1 deleteIcon">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>';
+                    } 
+                    $output .= '</tbody></table>';
+                    echo $output; 
+            }else{
+                echo '<h1 class="text-center text-secondary my-5">Pas de données pour l\'instant ! </h1>';
+            }
+
+        //return response()->json(['data' => $resultat]);
     }
 
     //______________________________________________personnel_____________________________________________________
@@ -411,10 +443,34 @@ class Ctrpersonnel extends Controller
 
     //______________________________________________fin_____________________________________________________________
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+>>>>>>> 8d2a2d94610a7db0744b1da0bdcb49bfa2b46185
     public function update(Request $request, $id)
     {
         //
     }
+>>>>>>> f3304c65f2d935344c2db94e21f96c20bfd2cc01
 
     public function update_profil(Request $request)
     {

@@ -87,7 +87,6 @@ Route::post('admin/update_users', [Ctrpersonnel::class, 'update_users'])->name('
 Route::post('admin/destroy_users', [Ctrpersonnel::class, 'destroy_users'])->name('destroy_users');
 Route::post('admin/destroy_affecter', [Ctrpersonnel::class, 'destroy_affecter'])->name('destroy_affecter');
 Route::post('admin/get_affecter', [Ctrpersonnel::class, 'get_affecter'])->name('get_affecter');
-Route::get('admin/users_list', [Ctrpersonnel::class, 'getUsers'])->name('getUsers');
 Route::post('/admin/user_store', [Ctrpersonnel::class, 'storeUser'])->name('user_store');
 //_____________________________________fin____________________________________________________________________
 //________________________________debut_affectation___________________________________________________________
@@ -97,13 +96,13 @@ Route::get('admin/afectation', [Ctrpersonnel::class, 'get_afectation'])->name('g
 Route::get('admin/get_affectation', [Ctrpersonnel::class, 'get_affectation'])->name('get_affectation');
 Route::post('admin/create_affectation', [Ctrpersonnel::class, 'create_affectation'])->name('create_affectation');
 Route::get('admin/login', [Ctrpersonnel::class, 'index_login'])->name('index_login');
-Route::post('admin/login_prossess', [Ctrpersonnel::class, 'login'])->name('create_login'); 
+Route::post('admin/login_prossess', [Ctrpersonnel::class, 'login'])->name('create_login');
 Route::post('admin/update_login', [Ctrpersonnel::class, 'update_login'])->name('update_login');
 
 Route::post('admin/delete_historique', [Ctrpersonnel::class, 'delete_historique'])->name('delete_historique');
 Route::get('admin/historique', [Ctrpersonnel::class, 'index_historique'])->name('index_historique');
 //_________________________________fin affectation___________________________________________________________
-Route::get('admin/dashboard', [ctradmin::class, 'index'])->name('route_index'); 
+Route::get('admin/dashboard', [ctradmin::class, 'index'])->name('route_index');
 
 //_____________________________________________debut ong______________________________________________________
 Route::get('admin/index_ong', [Ctrparemetre::class, 'index_ong'])->name('index_create_ong');
@@ -120,9 +119,9 @@ Route::get('admin/repartion_ong', [CtrTransfert::class, 'repartition_ong'])->nam
 
 //___________________agence______________________________________________________
 
-Route::get('/agence', [Ctrparemetre::class, 'index_agence'])->name('index_agence'); 
-Route::post('/save_agence', [Ctrparemetre::class, 'store_agence'])->name('route_create_agence'); 
-Route::post('/get_agence', [Ctrparemetre::class, 'get_id_agence'])->name('get_agence'); 
+Route::get('/agence', [Ctrparemetre::class, 'index_agence'])->name('index_agence');
+Route::post('/save_agence', [Ctrparemetre::class, 'store_agence'])->name('route_create_agence');
+Route::post('/get_agence', [Ctrparemetre::class, 'get_id_agence'])->name('get_agence');
 Route::post('/update_agence', [Ctrparemetre::class, 'update_agence'])->name('route_update_agence');
 Route::post('/delete_agence', [Ctrparemetre::class, 'destroy_agence'])->name('delete_agence');
 Route::get('/list_agence', [Ctrparemetre::class, 'get_list_agence'])->name('get_list_agence');
@@ -256,7 +255,7 @@ Route::get('admin/liste_rapport_credit/{d},{f}', [CtrTransfert::class, 'get_rapp
 Route::get('admin/liste_rapport_restitution/{d},{f}', [CtrTransfert::class, 'get_rapport_restitution']);
 
 
-Route::get("admin/barcharts", [CtrTransfert::class,'get_all_entree']);
+Route::get("admin/barcharts", [CtrTransfert::class, 'get_all_entree']);
 //---------------------------------cloture de transaction -----------------------
 Route::get('admin/partenaire_trans', [CtrTransfert::class, 'partenaire_trans'])->name('partenaire');
 
@@ -270,7 +269,3 @@ Route::get('admin/affichagecode', [Ctrpersonnel::class, 'affichagecode'])->name(
 
 Route::get('admin/index_retrait', [CtrTransfert::class, 'index_retrait'])->name('index_retrait');
 Route::post('admin/update_retrait_code', [CtrTransfert::class, 'update_retrait'])->name('update_retrait');
-
-
-
-

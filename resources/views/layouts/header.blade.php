@@ -566,8 +566,8 @@
         $('body').delegate('.supprimer_fonction', 'click', function() {
             var ids = $(this).data('id');
             swal({
-                title: 'Voulez supprimer le donnes dans la base de donnees?',
-                text: "le donnes ne seront plus trouvables apres suppression!",
+                title: 'Voulez-supprimer les données dans la base de données?',
+                text: "Les données ne seront plus trouvables après suppression!",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -1232,7 +1232,7 @@
         }
 
         function affiche_users() {
-            var otableau = $('#tab_users').DataTable({
+            /* var otableau = $('#tab_users').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
                     'print', 'copy', 'excel', 'pdf'
