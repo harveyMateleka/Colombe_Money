@@ -30,12 +30,63 @@ class Ctrpersonnel extends Controller
     {
         if (Auth::check()) {
             $this->entete();
+<<<<<<< HEAD
             $result_users=$this->generateRandom();
             return view('view_users',compact('result_users'));
         }
         else{
             return redirect()->route('index_login');
           }
+=======
+            $result_users = $this->generateRandom();
+            return view('view_users', compact('result_users'));
+        } else {
+            return redirect()->route('index_login');
+        }
+    }
+
+    public function getUsers()
+    {
+        if (Auth::check()) {
+            $resultat = DB::table('users')->join('tbl_personnels', 'users.matricule', '=', 'tbl_personnels.matricule')
+                ->orderBy('id', 'DESC')
+                ->get(array('id', 'email', 'etatcon', 'tbl_personnels.nom'));
+
+            $agents = tbl_personnel::get();
+            $datas = User::orderBy('name', 'asc')->get();
+
+            return view('view_users', compact('datas', 'agents'));
+
+            /* $agents = tbl_personnel::get();
+
+        dd($datas);*/
+        }
+    }
+
+    // CREATION NOUVEL UTILISATEUR
+
+    public function storeUser(Request $request)
+    {
+        $file = $request->file('avatar');
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('public/img', $fileName);
+
+        print_r($file);
+
+        $etat = 0;
+
+        $empData = [
+            'name' => $request->nom,
+            'email' => $request->email,
+            'password' => $request->pwd,
+            'etat' => $etat,
+        ];
+
+        User::create($empData);
+        return response()->json([
+            "status" => 200,
+        ]);
+>>>>>>> 4a9488b1e7bbd8102ecd122e995d7c0e247924b8
     }
 
     public function index_historique()
@@ -152,6 +203,13 @@ class Ctrpersonnel extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+<<<<<<< HEAD
+=======
+    {
+        //
+    }
+    public function historisation($matr, $operation)
+>>>>>>> 4a9488b1e7bbd8102ecd122e995d7c0e247924b8
     {
         //
     }
@@ -288,10 +346,17 @@ class Ctrpersonnel extends Controller
 
     public function get_list_users(Request $request)
     {
+<<<<<<< HEAD
         $resultat=DB::table('users')->join('tbl_personnels','users.matricule','=','tbl_personnels.matricule')
                                              ->orderBy('id','DESC')
                                              ->get(array('id','email','etatcon','tbl_personnels.nom')); 
            return response()->json(['data'=>$resultat]);
+=======
+        $resultat = DB::table('users')->join('tbl_personnels', 'users.matricule', '=', 'tbl_personnels.matricule')
+            ->orderBy('id', 'DESC')
+            ->get(array('id', 'email', 'etatcon', 'tbl_personnels.nom'));
+        return response()->json(['data' => $resultat]);
+>>>>>>> 4a9488b1e7bbd8102ecd122e995d7c0e247924b8
     }
 
     //______________________________________________personnel_____________________________________________________
@@ -377,6 +442,7 @@ function generateRandomString($length = 4) {
 
     //______________________________________________fin_____________________________________________________________
 
+<<<<<<< HEAD
     /**
      * Display the specified resource.
      *
@@ -388,6 +454,8 @@ function generateRandomString($length = 4) {
         //
     }
 
+=======
+>>>>>>> 4a9488b1e7bbd8102ecd122e995d7c0e247924b8
     /**
      * Show the form for editing the specified resource.
      *
