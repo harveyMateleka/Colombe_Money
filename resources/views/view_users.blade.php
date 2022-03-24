@@ -80,7 +80,7 @@
                 <input type="hidden" class="form-control" id="matr_users">
             </form>
         </div>
-    </div>
+    </div> 
     <hr class="border-light container-m--x my-4">
     <div class="card col-md-12"> 
         <h6 class="card-header">Liste des Utilisateur</h6>
