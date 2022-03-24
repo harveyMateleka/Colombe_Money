@@ -86,7 +86,7 @@
         <h6 class="card-header">Liste des Utilisateur</h6>
         <div class="card-body" style="overflow-x: auto;">
             <table class="table card-table" id="tab_users">
-                <thead class="thead-light">f
+                <thead class="thead-light">
                     <tr> 
                         <th>Id</th>
                         <th>Nom du Personnel</th>
