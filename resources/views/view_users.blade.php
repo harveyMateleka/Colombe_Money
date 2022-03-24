@@ -82,7 +82,7 @@
         </div>
     </div>
     <hr class="border-light container-m--x my-4">
-    <div class="card col-md-12">
+    <div class="card col-md-12"> 
         <h6 class="card-header">Liste des Utilisateur</h6>
         <div class="card-body" style="overflow-x: auto;">
             <table class="table card-table" id="tab_users">
