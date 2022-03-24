@@ -89,7 +89,7 @@
                 <thead class="thead-light">
                     <tr>
                         <th>Id</th>
-                        <th>Nom du Personnel</th>
+                        <th>Nom du Personnel</th> 
                         <th>Email</th> 
                         <th>Etat Con</th> 
                         <th>ACTION</th>
