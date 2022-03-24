@@ -44,7 +44,7 @@
             text-align: center;
         }
 
-        .swal2-icon.swal2-warning.swal2-icon-show{
+        .swal2-icon.swal2-warning.swal2-icon-show {
             font-size: 15px;
             margin-top: 25px !important;
         }
@@ -392,7 +392,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
@@ -1267,8 +1267,8 @@
                         "autoWidth": true,
                         "render": function(data) {
                             return `
-                                <button data-id=' + data + ' class="btn btn-danger btn-circle supprimer_users" ><i class="fa fa-trash"></i></button>
-                                <button data-id=' + data + ' class="btn btn-success btn-circle editUser" ><i class="fa fa-edit"></i></button>
+                                <button data-id=${data} class="btn btn-danger btn-circle supprimer_users" ><i class="fa fa-trash"></i></button> 
+                                <button data-id=${data} class="btn btn-success btn-circle editUser" ><i class="fa fa-edit"></i></button>
                             `;
                         }
                     }

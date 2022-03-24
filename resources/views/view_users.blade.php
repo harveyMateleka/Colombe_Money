@@ -84,7 +84,7 @@
     <hr class="border-light container-m--x my-4">
     <div class="card col-md-12">
         <h6 class="card-header">Liste des Utilisateur</h6>
-        <div class="card-body">
+        <div class="card-body" style="overflow-x: auto;">
             <table class="table card-table" id="tab_users">
                 <thead class="thead-light">
                     <tr>
@@ -123,9 +123,19 @@ name_passe:$("#name_password").val()
 },
 success:function(data)
 {
-if(data.success=='1'){
-window.location.href=("{{route('index_users')}}");
+console.log('DATA ::: ', data);
+if(data.success == "1"){
+Swal.fire(
+'Ajouté',
+'L\'utilisateur a été bien ajouté.',
+'success'
+)
+$("#name_matr").val('');
+$("#name_email").val('');
+$("#matr_users").val('');
+affiche_users();
 }
+
 else{
 $('#affichage_message').html("l'utilisateur existe deja");
 $('#modal_message').modal('show');
@@ -152,9 +162,16 @@ $('#btnreset_users').click(function() {
 window.location.href=("{{route('index_users')}}");
 });
 
+$('body').delegate('.editUser', 'click', function(){
+let ids=$(this).data('id');
+console.log('Editer clic : ', ids)
+});
+
 
 $('body').delegate('.supprimer_users','click',function(){
 var ids=$(this).data('id');
+
+console.log(ids, 'USERS ID')
 
 Swal.fire({
 
@@ -167,24 +184,29 @@ cancelButtonColor: '#d33',
 confirmButtonText: 'Oui, je supprime',
 
 }).then((result)=>{
-    if(result.isConfirmed){
-        $.ajax({
-            url   : "{{route('destroy_users')}}",
-            type  : 'POST',
-            async : false,
-            data  : {code:ids},
-            success:function(data){
-                if(data.success=='1'){
-                    affiche_users();
-                }
-                else{
-                }
-            },
-            error:function(error){
-                console('Erreur :::: ', error);                              
-            }
-        }); 
-    }
+if(result.isConfirmed){
+$.ajax({
+url : "{{route('destroy_users')}}",
+type : 'POST',
+async : false,
+data : {code:ids},
+success:function(data){
+Swal.fire(
+'Supprimé',
+'L\'utilisateur a été bien supprimé.',
+'success'
+)
+if(data.success=='1'){
+affiche_users();
+}
+else{
+}
+},
+error:function(error){
+console('Erreur :::: ', error);
+}
+});
+}
 });
 
 });
