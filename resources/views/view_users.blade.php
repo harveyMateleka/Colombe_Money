@@ -79,14 +79,21 @@
 
                 <hr class="border-light container-m--x my-4">
 
-                <span id="divBtn">
-                    <button type="button" class="btn btn-success saveUser" name="btnsave_users" id="btnsave_users">
-                        Créer
-                    </button>
-                </span>
+                <div class='d-flex'>
+                    <span id="divBtn">
+                        <button type="button" class="btn btn-success saveUser" name="btnsave_users" id="btnsave_users">
+                            Créer
+                        </button>
 
-                <button type="button" class="btn btn-danger" id="btnreset_users">Annuler</button>
-                <input type="hidden" class="form-control" id="code_users">
+                        <button type="button" style='display:none' class="btn btn-success updateUser" name="updateUser" id="updateUser">
+                            Modifier
+                        </button>
+                    </span>
+
+                    <button style='margin-left: 10px ' type="button" class="btn btn-danger" id="btnreset_users">Annuler</button>
+                </div>
+
+                <input type="hidden" class="form-control" id="codeUser" name="codeUser">
                 <input type="hidden" class="form-control" id="matr_users">
             </form>
         </div>
@@ -123,9 +130,12 @@ $("#matr_users").val(ids);
 
 // CREATION USER
 
+document.querySelector('.updateUser').style.display = 'none';
+
+
 $('.saveUser').click(function() {
-if($("#name_matr").val()!='' && $("#name_email").val()!='' && $("#name_password").val()!=''){
-if ($("#code_users").val()=='') {
+if($("#name_matr").val()!=='' && $("#name_email").val()!=='' && $("#name_password").val()!==''){
+
 $.ajax({
 url : "{{route('save_users')}}",
 type : 'POST',
@@ -136,7 +146,7 @@ name_passe:$("#name_password").val()
 },
 success:function(data)
 {
-console.log('DATA ::: ', data);
+
 if(data.success == "1"){
 Swal.fire(
 'Ajouté',
@@ -164,9 +174,9 @@ alert(data.success);
 }
 });
 }
-}
+
 else{
-$('#affichage_message').html('Remplissez toutes les zones');
+$('#affichage_message').html('Veuillez remplir tous les champs svp !');
 $('#modal_message').modal('show');
 }
 });
@@ -177,18 +187,11 @@ window.location.href=("{{route('index_users')}}");
 
 // EDITER USER
 
-let num = 0;
-
 $('body').delegate('.editUser', 'click', function(){
 let ids=$(this).data('id');
 
-num++;
-
-if(num==1){
-$('#divBtn').append($('<button type="button" class="btn btn-success editerUtilisateur">Modifier</button>'));
-}
-
-$('.saveUser').remove();
+document.querySelector('.saveUser').style.display = 'none';
+document.querySelector('.updateUser').style.display = 'block';
 
 $.ajax({
 url:'{{route('get_id_user')}}',
@@ -198,6 +201,7 @@ id: ids,
 },
 success: function(res){
 
+$('#codeUser').val(res.id);
 $("#name_matr").val(res.matricule);
 $("#name_email").val(res.email);
 $("#matr_users").val(res.matricule);
@@ -206,26 +210,46 @@ $("#matr_users").val(res.matricule);
 
 });
 
-// UPDATE FUNCTION USER
+// UPDATE USER
 
-$('body').delegate('.editerUtilisateur', 'click', function(){
+$('body').delegate('.updateUser', 'click', function(){
+
 let dataUser = {};
 
+let id = $('#codeUser').val();
 let email = $("#name_email").val();
+let matricule = $("#name_matr").val();
 let pwd = $("#name_password").val();
 let new_password = 'Mtp-' + parseInt(Math.random() * 10000);
 
+dataUser.id = id;
 dataUser.email = email;
 dataUser.password = new_password;
-
-document.querySelector('.waves-effect').innerHTML = 'Modification <i class="fa fa-spinner fa-spin"></i> ';
+dataUser.matricule = matricule;
 
 $.ajax({
-url: '{{'update_users'}}',
+url: '{{route('update_users')}}',
 method: 'POST',
 data: dataUser,
 success:function(res){
-    console.log(res);
+if(res.status == 200){
+Swal.fire(
+'Modifié',
+'L\'utilisateur a été bien modifié.',
+'success',
+)
+
+let etatBTN = document.querySelector('.updateUser').style.display = 'none';
+let etatBNTsave = document.querySelector('.saveUser').style.display = 'block';
+
+console.log(etatBTN , 'ETAT BTN', etatBNTsave);
+affiche_users();
+}
+
+$("#name_matr").val('');
+$("#name_email").val('');
+$("#matr_users").val('');
+
 }
 });
 

@@ -75,6 +75,14 @@ class Ctrpersonnel extends Controller
         ]);
     }
 
+    public function get_id_user(Request $request)
+    {
+        $id = $request->id;
+
+        $result = User::find($id);
+        return response()->json($result);
+    }
+
     public function index_historique()
     {
         if (Auth::check()) {
@@ -285,11 +293,11 @@ class Ctrpersonnel extends Controller
     public function save_users(Request $request)
     {
         if ($request->ajax()) {
-            $resultat = user::whereMatricule($request->name_matr)->first();
+            $resultat = User::whereMatricule($request->name_matr)->first();
             if (!$resultat) {
                 $ii = 0;
                 $name = 'ABT-' . ++$ii;
-                $resultat = user::create([
+                $resultat = User::create([
                     'name' => $name,
                     'email' => $request->name_email,
                     'password' => Hash::make($request->name_passe),
@@ -302,19 +310,34 @@ class Ctrpersonnel extends Controller
             } else {
                 return response()->json(['success' => '0']);
             }
+
+            // return response()->json(['success' => 'DATA SAVE']);
         }
     }
+
+    // UPDATE USER
     public function update_Users(Request $request)
     {
-        $resultat = User::whereId($request->code_users)
-            ->update([
-                'email' => $request->name_email,
-                'password' => Hash::make($request->name_passe),
+
+        if ($request->ajax()) {
+            $id = $request->id;
+
+            $result = User::findOrFail($id);
+
+            $dataForm = [
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
                 'etatcon' => '0',
                 'etat' => '0',
-                'matricule' => $request->name_matr,
+                'matricule' => $request->matricule,
+            ];
+
+            $result->update($dataForm);
+            return response()->json([
+                'status' => 200,
+                'message' => "Utilisateur modifié avec succès"
             ]);
-        return response()->json(['success' => '1']);
+        }
     }
 
     public function get_list_users()
