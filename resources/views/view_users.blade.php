@@ -134,6 +134,7 @@ document.querySelector('.updateUser').style.display = 'none';
 
 
 $('.saveUser').click(function() {
+let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 if($("#name_matr").val()!=='' && $("#name_email").val()!=='' && $("#name_password").val()!==''){
 
 $.ajax({

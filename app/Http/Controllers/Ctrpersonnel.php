@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Session;
 
+use App\Mail\SendMail;
+use Illuminate\Support\Facades\Mail;
+
 class Ctrpersonnel extends Controller
 {
 
@@ -323,6 +326,8 @@ class Ctrpersonnel extends Controller
             $id = $request->id;
 
             $result = User::findOrFail($id);
+
+           // Mail::to('kikonistephane@gmail.com')->send(new SendMail());
 
             $dataForm = [
                 'email' => $request->email,
