@@ -87,7 +87,8 @@ Route::post('admin/update_users', [Ctrpersonnel::class, 'update_users'])->name('
 Route::post('admin/destroy_users', [Ctrpersonnel::class, 'destroy_users'])->name('destroy_users');
 Route::post('admin/destroy_affecter', [Ctrpersonnel::class, 'destroy_affecter'])->name('destroy_affecter');
 Route::post('admin/get_affecter', [Ctrpersonnel::class, 'get_affecter'])->name('get_affecter');
-Route::post('/admin/user_store', [Ctrpersonnel::class, 'storeUser'])->name('user_store');
+Route::post('admin/get_id_user', [Ctrpersonnel::class, 'get_id_user'])->name('get_id_user');
+
 //_____________________________________fin____________________________________________________________________
 //________________________________debut_affectation___________________________________________________________
 Route::get('admin/affectation', [Ctrpersonnel::class, 'index_affectation'])->name('index_affectation');

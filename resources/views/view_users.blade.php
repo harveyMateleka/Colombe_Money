@@ -1,5 +1,6 @@
 @extends('layouts.header')
 @section('content')
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -47,12 +48,15 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="form-row">
-                                    <input type="text" class="form-control" disabled name="name_matr" placeholder="Afficher le matricule" id="name_matr">
+                                    <input type="text" class="form-control" name="name_matr" disabled placeholder="Afficher le matricule" id="name_matr">
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" name="btnsave_smenu" id="btnsave_smenu">Personnel</button>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" name="btnsave_smenu" id="btnsave_smenu">
+                                    Personnel
+                                </button>
+
                             </div>
                         </div>
                     </div>
@@ -68,14 +72,20 @@
                 </br>
                 <div class="form-row">
                     <div class="input-group col-md-6">
-                        <input type="text" class="form-control" disabled name="name_password" placeholder="" id="name_password" value="{!! $result_users !!}">
+                        <input type="text" class="form-control" name="name_password" placeholder="" id="name_password" value="{!! $result_users !!}">
                         <div class="clearfix"></div>
                     </div>
                 </div>
 
                 <hr class="border-light container-m--x my-4">
-                <button type="button" class="btn btn-success" name="btnsave_users" id="btnsave_users">Enregistre</button>
-                <button type="button" class="btn btn-danger" id="btnreset_users">annule</button>
+
+                <span id="divBtn">
+                    <button type="button" class="btn btn-success saveUser" name="btnsave_users" id="btnsave_users">
+                        Créer
+                    </button>
+                </span>
+
+                <button type="button" class="btn btn-danger" id="btnreset_users">Annuler</button>
                 <input type="hidden" class="form-control" id="code_users">
                 <input type="hidden" class="form-control" id="matr_users">
             </form>
@@ -84,7 +94,7 @@
     <hr class="border-light container-m--x my-4">
     <div class="card col-md-12">
         <h6 class="card-header">Liste des Utilisateur</h6>
-        <div class="card-body">
+        <div class="card-body" style="overflow-x: auto;">
             <table class="table card-table" id="tab_users">
                 <thead class="thead-light">
                     <tr>
@@ -111,7 +121,9 @@ $("#name_matr").val(ids);
 $("#matr_users").val(ids);
 });
 
-$('#btnsave_users').click(function() {
+// CREATION USER
+
+$('.saveUser').click(function() {
 if($("#name_matr").val()!='' && $("#name_email").val()!='' && $("#name_password").val()!=''){
 if ($("#code_users").val()=='') {
 $.ajax({
@@ -124,9 +136,19 @@ name_passe:$("#name_password").val()
 },
 success:function(data)
 {
-if(data.success=='1'){
-window.location.href=("{{route('index_users')}}");
+console.log('DATA ::: ', data);
+if(data.success == "1"){
+Swal.fire(
+'Ajouté',
+'L\'utilisateur a été bien ajouté.',
+'success'
+)
+$("#name_matr").val('');
+$("#name_email").val('');
+$("#matr_users").val('');
+affiche_users();
 }
+
 else{
 $('#affichage_message').html("l'utilisateur existe deja");
 $('#modal_message').modal('show');
@@ -153,28 +175,100 @@ $('#btnreset_users').click(function() {
 window.location.href=("{{route('index_users')}}");
 });
 
+// EDITER USER
+
+let num = 0;
+
+$('body').delegate('.editUser', 'click', function(){
+let ids=$(this).data('id');
+
+num++;
+
+if(num==1){
+$('#divBtn').append($('<button type="button" class="btn btn-success editerUtilisateur">Modifier</button>'));
+}
+
+$('.saveUser').remove();
+
+$.ajax({
+url:'{{route('get_id_user')}}',
+method:'POST',
+data:{
+id: ids,
+},
+success: function(res){
+
+$("#name_matr").val(res.matricule);
+$("#name_email").val(res.email);
+$("#matr_users").val(res.matricule);
+}
+});
+
+});
+
+// UPDATE FUNCTION USER
+
+$('body').delegate('.editerUtilisateur', 'click', function(){
+let dataUser = {};
+
+let email = $("#name_email").val();
+let pwd = $("#name_password").val();
+let new_password = 'Mtp-' + parseInt(Math.random() * 10000);
+
+dataUser.email = email;
+dataUser.password = new_password;
+
+document.querySelector('.waves-effect').innerHTML = 'Modification <i class="fa fa-spinner fa-spin"></i> ';
+
+$.ajax({
+url: '{{'update_users'}}',
+method: 'POST',
+data: dataUser,
+success:function(res){
+    console.log(res);
+}
+});
+
+});
+
+// DELETE USER
 
 $('body').delegate('.supprimer_users','click',function(){
 var ids=$(this).data('id');
-let confirmMessage = confirm('Etes-vous sûr de vouloir supprimer cet utilisateur ?');
 
+Swal.fire({
+
+title: 'Etes-vous sûr ?',
+text: 'Cette opération est irréversible.',
+icon: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Oui, je supprime',
+
+}).then((result)=>{
+if(result.isConfirmed){
 $.ajax({
 url : "{{route('destroy_users')}}",
 type : 'POST',
 async : false,
-data : {code:ids
-},
-success:function(data)
-{
+data : {code:ids},
+success:function(data){
+Swal.fire(
+'Supprimé',
+'L\'utilisateur a été bien supprimé.',
+'success'
+)
 if(data.success=='1'){
 affiche_users();
 }
 else{
-    
 }
 },
-error:function(err){
-    console.log(err)
+error:function(error){
+console('Erreur :::: ', error);
+}
+});
 }
 });
 
