@@ -43,6 +43,7 @@
             font-size: 15px;
             text-align: center;
         }
+
         .swal2-icon.swal2-warning.swal2-icon-show {
             font-size: 15px;
             margin-top: 25px !important;
@@ -604,6 +605,7 @@
                 })
             });
         });
+
         function affiche_ville() {
             var otableau = $('#tab_ville').DataTable({
                 "bProcessing": true,
@@ -630,6 +632,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_ong() {
             var otableau = $('#tab_save_ong').DataTable({
                 dom: 'Bfrtip',
@@ -699,6 +702,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_fonction() {
             var otableau = $('#tab_fonction').DataTable({
                 "bProcessing": true,
@@ -722,6 +726,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_partenaire() {
             var otableau = $('#tab_partenaire').DataTable({
                 dom: 'Bfrtip',
@@ -749,6 +754,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_typedep() {
             var otableau = $('#tab_typedep').DataTable({
                 dom: 'Bfrtip',
@@ -776,6 +782,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_menu() {
             var otableau = $('#tab_menu').DataTable({
                 dom: 'Bfrtip',
@@ -806,6 +813,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_smenu() {
             var otableau = $('#tab_smenu').DataTable({
                 dom: 'Bfrtip',
@@ -839,6 +847,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_droit() {
             var otableau = $('#tab_droit').DataTable({
                 dom: 'Bfrtip',
@@ -868,6 +877,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_agent() {
             var otableau = $('#tab_personnelle').DataTable({
                 dom: 'Bfrtip',
@@ -900,6 +910,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_agence1() {
             var otableau = $('#tab_agence1').DataTable({
                 dom: 'Bfrtip',
@@ -935,6 +946,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_affect() {
             var otableau = $('#tab_person').DataTable({
                 "bProcessing": true,
@@ -963,6 +975,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_affectation() {
             var otableau = $('#tab_affectation').DataTable({
                 dom: 'Bfrtip',
@@ -1004,6 +1017,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_entree(code_agence) {
             var otableau = $('#tab_entree').DataTable({
                 dom: 'Bfrtip',
@@ -1045,6 +1059,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_sortie(code_agence) {
             var otableau = $('#tab_sortie').DataTable({
                 "bProcessing": true,
@@ -1079,6 +1094,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_mouvement() {
             var otableau = $('#tab_mouvement').DataTable({
                 dom: 'Bfrtip',
@@ -1134,6 +1150,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_banque() {
             var otableau = $('#tab_banque').DataTable({
                 dom: 'Bfrtip',
@@ -1178,6 +1195,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_users() {
             var otableau = $('#tab_users').DataTable({
                 dom: 'Bfrtip',
@@ -1221,6 +1239,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_agence() {
             var otableau = $('#tab_agence').DataTable({
                 dom: 'Bfrtip',
@@ -1260,6 +1279,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_transfert_partenaire() {
             var otableau = $('#transfert').DataTable({
                 dom: 'Bfrtip',
@@ -1302,6 +1322,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_personnel() {
             var otableau = $('#tab_personnel').DataTable({
                 dom: 'Bfrtip',
@@ -1365,6 +1386,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_taux() {
             var otableau = $('#tab_taux').DataTable({
                 dom: 'Bfrtip',
@@ -1395,6 +1417,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_depense(cod_agence) {
             var otableau = $('#tab_depense').DataTable({
                 dom: 'Bfrtip',
@@ -1464,6 +1487,7 @@
                 "bDestroy": true
             });
         }
+
         function affiche_ong1() {
             var otableau = $('#tab_ong1').DataTable({
                 dom: 'Bfrtip',
