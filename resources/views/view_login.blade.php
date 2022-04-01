@@ -40,6 +40,8 @@
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <label class="custom-control custom-checkbox ">
+                    <input type="checkbox" class="custom-control-input" id="checking">
+                    <span class="custom-control-label" >Mot de passe oublié</span>
                 </label>
                 <button type="submit" class="btn btn-success" name="login" id='login' style='margin-bottom: 40px; margin-top:10px'>Se connecter</button>
             </div>
