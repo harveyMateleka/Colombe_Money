@@ -423,22 +423,14 @@
             affiche_partenaire();
             affiche_transfert_partenaire();
             @yield('script');
-
         });
         jQuery(function($) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-
             });
-
         });
-
-
-
-
-
         //____________________________fin
         //___________________________debut fonction_________________________________
         $('#btnsave_fonction').click(function() {
@@ -481,7 +473,6 @@
                                         }
                                     },
                                     error: function(data) {
-
                                         alert(data.success);
                                     }
                                 });
@@ -533,7 +524,6 @@
                                         } else {
                                             alert('erreur de transaction');
                                         }
-
                                     }
                                 });
                             })
@@ -546,11 +536,8 @@
                         })
                     });
                 }
-
-
             }
         });
-
         $('body').delegate('.modifier_fonction', 'click', function() {
             var ids = $(this).data('id');
             $.ajax({
@@ -605,7 +592,6 @@
                                 }
                             },
                             error: function(data) {
-
                                 alert(data.success);
                             }
                         });
@@ -637,7 +623,6 @@
                         "data": 'id_ville',
                         "autoWidth": true,
                         "render": function(data) {
-
                             return '<button data-id=' + data + ' class="btn btn-warning btn-circle supprimer_ville" ><i class="fa fa-times"></i></button>' + ' ' +
                                 '<button data-id=' + data + ' class="btn btn-info btn-circle modifier_ville" ><i class="fa fa-check"></i></button>';
                         }
@@ -646,7 +631,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_ong() {
@@ -689,7 +673,6 @@
                     {
                         "data": 'mont_dep'
                     },
-
                     {
                         "data": 'montpayé',
                         "autoWidth": true,
@@ -734,7 +717,6 @@
                         "data": 'id_fonction',
                         "autoWidth": true,
                         "render": function(data) {
-
                             return '<button data-id=' + data + ' class="btn btn-warning btn-circle supprimer_fonction" ><i class="fa fa-times"></i></button>' + ' ' +
                                 '<button data-id=' + data + ' class="btn btn-info btn-circle modifier_fonction" ><i class="fa fa-check"></i></button>';
                         }
@@ -743,7 +725,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_partenaire() {
@@ -772,7 +753,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_typedep() {
@@ -793,7 +773,6 @@
                         "data": 'id_typdep',
                         "autoWidth": true,
                         "render": function(data) {
-
                             return '<button data-id=' + data + ' class="btn btn-warning btn-circle supprimer_typedep" ><i class="fa fa-times"></i></button>' + ' ' +
                                 '<button data-id=' + data + ' class="btn btn-info btn-circle modifier_typedep" ><i class="fa fa-check"></i></button>';
                         }
@@ -802,7 +781,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_menu() {
@@ -826,7 +804,6 @@
                         "data": 'id_menu',
                         "autoWidth": true,
                         "render": function(data) {
-
                             return '<button data-id=' + data + ' class="btn btn-warning btn-circle supprimer_menu" ><i class="fa fa-times"></i></button>' + ' ' +
                                 '<button data-id=' + data + ' class="btn btn-info btn-circle modifier_menu" ><i class="fa fa-check"></i></button>';
                         }
@@ -835,7 +812,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_smenu() {
@@ -862,7 +838,6 @@
                         "data": 'id_sous',
                         "autoWidth": true,
                         "render": function(data) {
-
                             return '<button data-id=' + data + ' class="btn btn-warning btn-circle supprimer_smenu" ><i class="fa fa-times"></i></button>' + ' ' +
                                 '<button data-id=' + data + ' class="btn btn-info btn-circle modifier_smenu" ><i class="fa fa-check"></i></button>';
                         }
@@ -871,7 +846,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_droit() {
@@ -902,7 +876,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_agent() {
@@ -936,7 +909,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_agence1() {
@@ -973,7 +945,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_affect() {
@@ -1003,7 +974,6 @@
                 "pageLength": 5,
                 "bDestroy": true
             });
-
         }
 
         function affiche_affectation() {
@@ -1046,9 +1016,7 @@
                 "pageLength": 5,
                 "bDestroy": true
             });
-
         }
-
 
         function affiche_entree(code_agence) {
             var otableau = $('#tab_entree').DataTable({
@@ -1086,12 +1054,10 @@
                             return '<button data-id=' + data + ' class="btn btn-warning btn-circle print" >Print</button>';
                         }
                     }
-
                 ],
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_sortie(code_agence) {
@@ -1127,7 +1093,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_mouvement() {
@@ -1184,7 +1149,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_banque() {
@@ -1213,7 +1177,6 @@
                             } else {
                                 return 'Usd'
                             }
-
                         }
                     },
                     {
@@ -1231,7 +1194,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_users() {
@@ -1316,11 +1278,7 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
-
-
-
 
         function affiche_transfert_partenaire() {
             var otableau = $('#transfert').DataTable({
@@ -1363,12 +1321,9 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
-
         function affiche_personnel() {
-
             var otableau = $('#tab_personnel').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
@@ -1416,14 +1371,12 @@
                             } else {
                                 return 'licencie'
                             }
-
                         }
                     },
                     {
                         "data": 'matricule',
                         "autoWidth": true,
                         "render": function(data) {
-
                             return '<button data-id=' + data + ' class="btn btn-warning btn-circle supprimer_personnel" ><i class="fa fa-times"></i></button>' + ' ' +
                                 '<button data-id=' + data + ' class="btn btn-info btn-circle modifier_personnel" ><i class="fa fa-check"></i></button>';
                         }
@@ -1432,7 +1385,6 @@
                 "pageLength": 10,
                 "bDestroy": true
             });
-
         }
 
         function affiche_taux() {
@@ -1521,7 +1473,6 @@
                             } else {
                                 return 'ENTREPRISE'
                             }
-
                         }
                     },
                     {
@@ -1531,7 +1482,6 @@
                             return '<button data-id=' + data + ' class="btn btn-info btn-circle modifier_depense" ><i class="fa fa-check"></i></button>';
                         }
                     }
-
                 ],
                 "pageLength": 10,
                 "bDestroy": true

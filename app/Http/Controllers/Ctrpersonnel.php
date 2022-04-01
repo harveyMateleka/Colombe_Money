@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\tbl_personnel;
+use App\Http\Controllers\ctradmin;
+use App\Models\tbl_affectation;
 use App\Models\tbl_agence;
 use App\Models\tbl_fonction;
-use App\Models\User;
 use App\Models\tbl_historique;
-use App\Models\tbl_affectation;
+use App\Models\tbl_personnel;
+use App\Models\User;
+use DateTime;
+use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use App\Http\Controllers\ctradmin;
-use DB;
-use DateTime;
 use Session;
+
+use App\Mail\SendMail;
+use Illuminate\Support\Facades\Mail;
 
 class Ctrpersonnel extends Controller
 {
+
     private $date;
 
     public function index()
@@ -30,6 +33,57 @@ class Ctrpersonnel extends Controller
         } else {
             return redirect()->route('index_login');
         }
+    }
+
+    public function getUsers()
+    {
+        if (Auth::check()) {
+            $resultat = DB::table('users')->join('tbl_personnels', 'users.matricule', '=', 'tbl_personnels.matricule')
+                ->orderBy('id', 'DESC')
+                ->get(array('id', 'email', 'etatcon', 'tbl_personnels.nom'));
+
+            $agents = tbl_personnel::get();
+            $datas = User::orderBy('name', 'asc')->get();
+
+            return view('view_users', compact('datas', 'agents'));
+
+            /* $agents = tbl_personnel::get();
+
+        dd($datas);*/
+        }
+    }
+
+    // CREATION NOUVEL UTILISATEUR
+
+    public function storeUser(Request $request)
+    {
+        $file = $request->file('avatar');
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('public/img', $fileName);
+
+        print_r($file);
+
+        $etat = 0;
+
+        $empData = [
+            'name' => $request->nom,
+            'email' => $request->email,
+            'password' => $request->pwd,
+            'etat' => $etat,
+        ];
+
+        User::create($empData);
+        return response()->json([
+            "status" => 200,
+        ]);
+    }
+
+    public function get_id_user(Request $request)
+    {
+        $id = $request->id;
+
+        $result = User::find($id);
+        return response()->json($result);
     }
 
     public function index_historique()
@@ -84,7 +138,7 @@ class Ctrpersonnel extends Controller
 
     public function __construct()
     {
-        //$this->middleware('auth'); 
+        //$this->middleware('auth');
         $this->date = new DateTime();
     }
     public function entete()
@@ -97,7 +151,7 @@ class Ctrpersonnel extends Controller
     {
         $this->validate($request, [
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $personnel = tbl_personnel::whereMatricule(Auth::user()->matricule)->first();
@@ -121,7 +175,7 @@ class Ctrpersonnel extends Controller
     public function update_login(Request $request)
     {
         $this->validate($request, [
-            'new_password' => 'required', 'confirm' => 'required'
+            'new_password' => 'required', 'confirm' => 'required',
         ]);
         if ($request->new_password == $request->confirm) {
             $update = user::whereId(Auth::user()->id)->update(['password' => Hash::make($request->new_password), 'etat' => '1', 'etatcon' => '1']);
@@ -129,7 +183,7 @@ class Ctrpersonnel extends Controller
             return redirect()->route('route_index');
         } else {
             return back()->with([
-                'message' => 'verifier bien votre mot de passe'
+                'message' => 'verifier bien votre mot de passe',
             ]);
         }
     }
@@ -149,7 +203,7 @@ class Ctrpersonnel extends Controller
             $insert = tbl_historique::create([
                 'matricule' => $matr,
                 'operation' => $operation,
-                'created_at' => $this->date->format('Y-m-d H:i:s')
+                'created_at' => $this->date->format('Y-m-d H:i:s'),
             ]);
             return 1;
         }
@@ -167,7 +221,7 @@ class Ctrpersonnel extends Controller
                         'matricule' => $request->name_matr,
                         'numagence' => $request->name_agence,
                         'statut' => '1',
-                        'created_at' => $this->date->format('Y-m-d H:i:s')
+                        'created_at' => $this->date->format('Y-m-d H:i:s'),
                     ]);
                     return response()->json(['success' => '1']);
                 } else {
@@ -183,7 +237,7 @@ class Ctrpersonnel extends Controller
                         'matricule' => $request->name_matr,
                         'numagence' => $request->name_agence,
                         'statut' => '1',
-                        'created_at' => $this->date->format('Y-m-d H:i:s')
+                        'created_at' => $this->date->format('Y-m-d H:i:s'),
                     ]);
                     return response()->json(['success' => '1']);
                 } else {
@@ -242,47 +296,56 @@ class Ctrpersonnel extends Controller
     public function save_users(Request $request)
     {
         if ($request->ajax()) {
-            $resultat = user::whereMatricule($request->name_matr)->first();
+            $resultat = User::whereMatricule($request->name_matr)->first();
             if (!$resultat) {
                 $ii = 0;
                 $name = 'ABT-' . ++$ii;
-                $resultat = user::create([
+                $resultat = User::create([
                     'name' => $name,
                     'email' => $request->name_email,
                     'password' => Hash::make($request->name_passe),
                     'etatcon' => '0',
                     'etat' => '0',
                     'matricule' => $request->name_matr,
-                    'remember_token' => $request->name_passe
+                    'remember_token' => $request->name_passe,
                 ]);
                 return response()->json(['success' => '1']);
             } else {
                 return response()->json(['success' => '0']);
             }
+
+            // return response()->json(['success' => 'DATA SAVE']);
         }
     }
 
-    public function get_id_user(Request $request)
-    {
-        $id = $request->id;
-        $user = User::find($id);
-        return response()->json($user);
-    }
-
+    // UPDATE USER
     public function update_Users(Request $request)
     {
-        $resultat = User::find($request->id)
-            ->update([
-                'email' => $request->name_email,
-                'password' => Hash::make($request->name_passe),
+
+        if ($request->ajax()) {
+            $id = $request->id;
+
+            $result = User::findOrFail($id);
+
+           // Mail::to('kikonistephane@gmail.com')->send(new SendMail());
+
+            $dataForm = [
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
                 'etatcon' => '0',
                 'etat' => '0',
-                'matricule' => $request->name_matr
+                'matricule' => $request->matricule,
+            ];
+
+            $result->update($dataForm);
+            return response()->json([
+                'status' => 200,
+                'message' => "Utilisateur modifié avec succès"
             ]);
-        return response()->json($resultat);
+        }
     }
 
-    public function get_list_users(Request $request)
+    public function get_list_users()
     {
         $resultat = DB::table('users')->join('tbl_personnels', 'users.matricule', '=', 'tbl_personnels.matricule')
             ->orderBy('id', 'DESC')
@@ -328,8 +391,6 @@ class Ctrpersonnel extends Controller
         return response()->json(['data' => $resultat]);
     }
 
-
-
     public function update_personnel(Request $request)
     {
         if ($request->ajax()) {
@@ -354,7 +415,7 @@ class Ctrpersonnel extends Controller
         }
     }
 
-    function generateRandomString($length = 4)
+    public function generateRandomString($length = 4)
     {
         $characters = 'A' . mt_rand(1000000000, 9999999999);
         $charactersLength = strlen($characters);
@@ -365,7 +426,7 @@ class Ctrpersonnel extends Controller
         return $randomString;
     }
 
-    function generateRandom($length = 4)
+    public function generateRandom($length = 4)
     {
         $characters = 'A' . mt_rand(1000000000, 9999999999);
         $charactersLength = strlen($characters);
@@ -377,17 +438,6 @@ class Ctrpersonnel extends Controller
     }
 
     //______________________________________________fin_____________________________________________________________
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -414,7 +464,6 @@ class Ctrpersonnel extends Controller
 
     public function update_profil(Request $request)
     {
-
 
         if (Auth::check()) {
             if ($request->hasFile('profil')) {
