@@ -4,7 +4,6 @@
   display: flex;
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
-  min-height: 100vh;
   width: 100%;
 }
 .authentication-wrapper .authentication-inner {
@@ -22,18 +21,13 @@
 
 }
 
-.page-loader{
-  margin-top: -70px !important;
-}
-
 .authentication-wrapper.authentication-1 .authentication-inner {
   
   border: 1px solid silver !important;
-  max-width: 400px;
+  max-width: 400px !important;
   padding: 20px;
   border-radius: 3px;
-  box-shadow: 0px 0px 10px silver !important;
-  margin-top: 40px !important;
+  background: #fff;
 }
 .authentication-wrapper.authentication-2 .authentication-inner {
   max-width: 380px;
