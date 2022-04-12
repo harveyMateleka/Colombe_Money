@@ -40,9 +40,6 @@
 
     <div class="card col-md-12" id="formAddAndUpdate" style="display: none">
         <h3 class="card-header">Créer Un Utilisateur</h3>
-       
-
-
         <div class="card-body">
             <form action="#" method="POST" id="form_utilisateur">
                 {{csrf_field()}}
@@ -51,7 +48,7 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="form-row">
-                                    <input type="text" class="form-control" name="name_matr" disabled placeholder="Afficher le matricule" id="name_matr">
+                                    <input type="text" class="form-control" name="name_matr"  disabled placeholder="Afficher le matricule" id="name_matr">
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
