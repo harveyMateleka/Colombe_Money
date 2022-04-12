@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Hash;
 use Session;
 
 use App\Mail\SendMail;
+use App\Mail\TestM;
+
 use Illuminate\Support\Facades\Mail;
 
 class Ctrpersonnel extends Controller
@@ -53,30 +55,19 @@ class Ctrpersonnel extends Controller
         }
     }
 
-    // CREATION NOUVEL UTILISATEUR
+    // Envoie de l'email
 
-    public function storeUser(Request $request)
+    /* public function sendMailUser()
     {
-        $file = $request->file('avatar');
-        $fileName = time() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('public/img', $fileName);
-
-        print_r($file);
-
-        $etat = 0;
-
-        $empData = [
-            'name' => $request->nom,
-            'email' => $request->email,
-            'password' => $request->pwd,
-            'etat' => $etat,
+        $code = '1200M@Aio';
+        $details = [
+            'title' => 'Equipe de développeurs La Colombe',
+            'body' => 'Ceci est votre mot de passe de réinitialisation ' .$code,
         ];
 
-        User::create($empData);
-        return response()->json([
-            "status" => 200,
-        ]);
-    }
+        Mail::to("kikonistephane@gmail.com")->send(new TestM($details));
+        return 'Email envoyé';
+    }*/
 
     public function get_id_user(Request $request)
     {
@@ -188,15 +179,6 @@ class Ctrpersonnel extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
     public function historisation($matr, $operation)
     {
         if ($matr != '' && $operation != '') {
@@ -266,16 +248,7 @@ class Ctrpersonnel extends Controller
             return response()->json(['success' => '1']);
         }
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+   
     public function get_afectation()
     {
         $resultat = DB::table('tbl_affectations')->join('tbl_personnels', 'tbl_affectations.matricule', '=', 'tbl_personnels.matricule')
@@ -323,11 +296,12 @@ class Ctrpersonnel extends Controller
     {
 
         if ($request->ajax()) {
+
             $id = $request->id;
 
             $result = User::findOrFail($id);
 
-           // Mail::to('kikonistephane@gmail.com')->send(new SendMail());
+            // Mail::to('kikonistephane@gmail.com')->send(new SendMail());
 
             $dataForm = [
                 'email' => $request->email,
@@ -342,6 +316,8 @@ class Ctrpersonnel extends Controller
                 'status' => 200,
                 'message' => "Utilisateur modifié avec succès"
             ]);
+
+            
         }
     }
 
@@ -445,22 +421,6 @@ class Ctrpersonnel extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     public function update_profil(Request $request)
     {
@@ -522,15 +482,7 @@ class Ctrpersonnel extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-    }
+    
     public function destroy_users(Request $id)
     {
         if ($id->ajax()) {
