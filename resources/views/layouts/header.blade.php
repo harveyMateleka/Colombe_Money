@@ -1231,6 +1231,7 @@
                             return `
                                 <button data-id=${data} class="btn btn-danger btn-circle supprimer_users" ><i class="fa fa-trash"></i></button> 
                                 <button data-id=${data} class="btn btn-success btn-circle editUser" ><i class="fa fa-edit"></i></button>
+                                <button data-id=${data} class="btn btn-primary btn-circle editPwd" ><i class="fa fa-key"></i></button>
                             `;
                         }
                     }
