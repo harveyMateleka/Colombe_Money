@@ -270,3 +270,6 @@ Route::get('admin/affichagecode', [Ctrpersonnel::class, 'affichagecode'])->name(
 
 Route::get('admin/index_retrait', [CtrTransfert::class, 'index_retrait'])->name('index_retrait');
 Route::post('admin/update_retrait_code', [CtrTransfert::class, 'update_retrait'])->name('update_retrait');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
