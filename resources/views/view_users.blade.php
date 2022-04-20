@@ -18,7 +18,7 @@
                             <th>Nom</th>
                             <th>PostNom</th>
                             <th>Prenom</th>
-                            <th>ACTION</th>
+                            <th  style="width: 100px !important;">ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,7 +38,7 @@
 
     </div>
 
-    <div class="card col-md-12">
+    <div class="card col-md-12" id="formAddAndUpdate" style="display: none">
         <h3 class="card-header">Créer Un Utilisateur</h3>
         <div class="card-body">
             <form action="#" method="POST" id="form_utilisateur">
@@ -48,7 +48,7 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="form-row">
-                                    <input type="text" class="form-control" name="name_matr" disabled placeholder="Afficher le matricule" id="name_matr">
+                                    <input type="text" class="form-control" name="name_matr"  disabled placeholder="Afficher le matricule" id="name_matr">
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
@@ -100,7 +100,18 @@
     </div>
     <hr class="border-light container-m--x my-4">
     <div class="card col-md-12">
-        <h6 class="card-header">Liste des Utilisateur</h6>
+        <h6 class="card-header">
+            <div class="row">
+                <div class="col-6">
+                    <h4>Liste des Utilisateurs <i class="fa fa-users"></i></h4>
+                </div>
+                <div class="col-6">
+                    <button type="button" id='btnadd' class="btn btn" style="border: 2px solid silver; float: right">
+                        <i class="fa fa-plus"></i> Ajouter un nouvel utilisateur
+                    </button>
+                </div>
+            </div>
+        </h6>
         <div class="card-body" style="overflow-x: auto;">
             <table class="table card-table" id="tab_users">
                 <thead class="thead-light">
@@ -126,6 +137,17 @@ $('body').delegate('.afficher_matr','click',function(){
 var ids=$(this).data('id');
 $("#name_matr").val(ids);
 $("#matr_users").val(ids);
+});
+
+// document.querySelector('#formAddAndUpdate').style.display="none";
+
+$('body').delegate('#btnadd','click',function(){
+    let idBtnAdd = $('#btnadd');
+    document.querySelector('#formAddAndUpdate').style.display="block";
+
+    setTimeout(function() {
+        document.querySelector('#formAddAndUpdate').style.display="none";
+}, [50000]);
 });
 
 // CREATION USER
@@ -157,6 +179,7 @@ Swal.fire(
 $("#name_matr").val('');
 $("#name_email").val('');
 $("#matr_users").val('');
+document.querySelector('#formAddAndUpdate').style.display="none";
 affiche_users();
 }
 
@@ -190,6 +213,8 @@ window.location.href=("{{route('index_users')}}");
 
 $('body').delegate('.editUser', 'click', function(){
 let ids=$(this).data('id');
+
+document.querySelector('#formAddAndUpdate').style.display="block";
 
 document.querySelector('.saveUser').style.display = 'none';
 document.querySelector('.updateUser').style.display = 'block';
@@ -243,7 +268,7 @@ Swal.fire(
 let etatBTN = document.querySelector('.updateUser').style.display = 'none';
 let etatBNTsave = document.querySelector('.saveUser').style.display = 'block';
 
-console.log(etatBTN , 'ETAT BTN', etatBNTsave);
+document.querySelector('#formAddAndUpdate').style.display="none";
 affiche_users();
 }
 
