@@ -142,25 +142,12 @@ class Ctrpersonnel extends Controller
     {
         $this->validate($request, [
             'email' => 'required|email',
-            'password' => 'required',
         ]);
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $personnel = tbl_personnel::whereMatricule(Auth::user()->matricule)->first();
-            $this->historisation(Auth::user()->matricule, 'Connected');
-            if ($personnel) {
-                Session::put('fonction', $personnel->id_fonction);
-            }
-            Session::put('password', $request->password);
-            if (Auth::user()->etat == '0') {
-                $motdepasse = $request->password;
-                return view('view_update', compact('motdepasse'));
-            } else {
-                $update = user::whereId(Auth::id())->update(['etatcon' => '1']);
-                return redirect()->route('route_index');
-            }
+        if (User::where('email', '=', $request->email)) {
+            return redirect()->route('route_index');
         } else {
             $message = 'vos informations sont incorrectes.';
-            return view('view_login', compact('message'));
+            return redirect()->route('route_index');
         }
     }
     public function update_login(Request $request)
@@ -169,12 +156,12 @@ class Ctrpersonnel extends Controller
             'new_password' => 'required', 'confirm' => 'required',
         ]);
         if ($request->new_password == $request->confirm) {
-            $update = user::whereId(Auth::user()->id)->update(['password' => Hash::make($request->new_password), 'etat' => '1', 'etatcon' => '1']);
+            $update = User::whereId(Auth::user()->id)->update(['password' => Hash::make($request->new_password), 'etat' => '1', 'etatcon' => '1']);
             Session::put('password', $request->new_password);
             return redirect()->route('route_index');
         } else {
             return back()->with([
-                'message' => 'verifier bien votre mot de passe',
+                'message' => 'Verifier bien votre mot de passe',
             ]);
         }
     }
@@ -248,7 +235,7 @@ class Ctrpersonnel extends Controller
             return response()->json(['success' => '1']);
         }
     }
-   
+
     public function get_afectation()
     {
         $resultat = DB::table('tbl_affectations')->join('tbl_personnels', 'tbl_affectations.matricule', '=', 'tbl_personnels.matricule')
@@ -316,8 +303,6 @@ class Ctrpersonnel extends Controller
                 'status' => 200,
                 'message' => "Utilisateur modifié avec succès"
             ]);
-
-            
         }
     }
 
@@ -482,7 +467,7 @@ class Ctrpersonnel extends Controller
         }
     }
 
-    
+
     public function destroy_users(Request $id)
     {
         if ($id->ajax()) {
